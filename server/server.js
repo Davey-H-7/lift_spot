@@ -12,10 +12,10 @@ app.use(cors());
 
 MongoClient.connect('mongodb://127.0.0.1:27017', {useUnifiedTopology: true})
 .then((client) => {
-    const db = client.db('run_tracker');
-    const runCollection = db.collection('runs');
+    const db = client.db('lift_spot');
+    const runCollection = db.collection('lifts');
     const runsRouter = createRouter(runCollection);
-    app.use('/api/runs', runsRouter);
+    app.use('/api/lifts', runsRouter);
 })
 .catch(console.error)
 
