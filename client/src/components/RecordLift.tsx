@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Request from "../helpers/request";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const RecordLift = () => {
 
@@ -10,8 +11,7 @@ const RecordLift = () => {
         reps:0,
     })
 
-    const notify = () => {toast("toasted")}
-
+    const notify = () => {toast("Lift record successful!")}
     
 
     const handleDate = (event: React.FormEvent<HTMLInputElement>) => {
@@ -39,27 +39,29 @@ const RecordLift = () => {
     }
 
     const handleSubmit = () => {
-      const request = new Request ();
-      request.post("http://localhost:9000/api/lifts", liftState)
-      .then(() => {
-        console.log(liftState)
-        notify();
-      })
+        event?.preventDefault()
+        const request = new Request ();
+        request.post("http://localhost:9000/api/lifts", liftState)
+        .then(() => notify())
+
     }
 
     return (
         <div>
             <form className="RecordLift" onSubmit={handleSubmit}>
-            <label htmlFor="date">Date of Lift</label>
-            <input type="date" name="date" onChange= {handleDate}/>
-            <label htmlFor ="distance">Weight(kg):</label>
-            <input type="number" name="distance" onChange={handleWeight}/>
-            <label htmlFor="time">Reps</label>
-            <input type="number" name="time" onChange={handleReps}/>
+                <label htmlFor="date">Date of Lift</label>
+                <input type="date" name="date" onChange= {handleDate}/>
+
+                <label htmlFor ="distance">Weight(kg):</label>
+                <input type="number" name="distance" onChange={handleWeight}/>
+
+                <label htmlFor="time">Reps</label>
+                <input type="number" name="time" onChange={handleReps}/>
  
-            <button type ="submit">Record</button>
+                <button type ="submit">Record</button>
+                <ToastContainer className="toast"/>
             </form>
-            <ToastContainer/>
+            
         </div>
       );
 }
