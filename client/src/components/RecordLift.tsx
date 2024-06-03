@@ -7,11 +7,20 @@ const RecordLift = () => {
 
     const[liftState, setLiftState] = useState({
         date: '0000-00-00',
+        exercise: '',
         weight:0,
         reps:0,
     })
 
     const notify = () => {toast("Lift record successful!")}
+
+    const handleExercise = (event: React.FormEvent<HTMLSelectElement>) => {
+        if (event.currentTarget){
+            const newLift = {...liftState}
+            newLift.exercise = event.currentTarget.value
+            setLiftState(newLift)
+        }
+    }
     
 
     const handleDate = (event: React.FormEvent<HTMLInputElement>) => {
@@ -49,7 +58,14 @@ const RecordLift = () => {
     return (
         <div>
             <form className="RecordLift" onSubmit={handleSubmit}>
-                <label htmlFor="date">Date of Lift</label>
+                <label htmlFor="exercise">What you liftin?</label>
+                <select name="exercise" onChange={handleExercise}>
+                    <option value = "Bench Press">Bench</option>
+                    <option value = "Squat">Squat</option>
+                    <option value = "Deadlift">Deadlift</option>
+                </select>
+
+                <label htmlFor="date">When?</label>
                 <input type="date" name="date" onChange= {handleDate}/>
 
                 <label htmlFor ="distance">Weight(kg):</label>
