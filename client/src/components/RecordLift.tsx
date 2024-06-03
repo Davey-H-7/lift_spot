@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Request from "../helpers/request";
+import { ToastContainer, toast } from "react-toastify";
 
 const RecordLift = () => {
 
@@ -8,6 +9,8 @@ const RecordLift = () => {
         weight:0,
         reps:0,
     })
+
+    const notify = () => {toast("toasted")}
 
     
 
@@ -37,14 +40,16 @@ const RecordLift = () => {
 
     const handleSubmit = () => {
       const request = new Request ();
-      request.post("http://localhost:9000/api/runs", liftState)
+      request.post("http://localhost:9000/api/lifts", liftState)
       .then(() => {
         console.log(liftState)
+        notify();
       })
     }
 
     return (
-        <div className="RecordLift" onSubmit={handleSubmit}>
+        <div>
+            <form className="RecordLift" onSubmit={handleSubmit}>
             <label htmlFor="date">Date of Lift</label>
             <input type="date" name="date" onChange= {handleDate}/>
             <label htmlFor ="distance">Weight(kg):</label>
@@ -53,6 +58,8 @@ const RecordLift = () => {
             <input type="number" name="time" onChange={handleReps}/>
  
             <button type ="submit">Record</button>
+            </form>
+            <ToastContainer/>
         </div>
       );
 }
